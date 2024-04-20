@@ -71,8 +71,10 @@
 </template>
 
 <script>
+import oktaConfig from '../../config/okta.js';
+
 export default {
- name: 'Login',
+ name: 'LoginForm',
 
  data () {
    return {
@@ -115,24 +117,71 @@ export default {
  },
 
  methods: {
-   getLogin () {
+   async getLogin () {
      this.loading4 = true
-     this.$store.dispatch('LoginByUsername', this.data).then(() => {
-       const auth = this.$store.getters.user.role_id
-       this.loading4 = false
-       if (auth === 'A') {
-         this.$router.push('/')
-       } else {
-         this.$router.push('/zenwel-biz/package')
-       }
-     }).catch(error => {
-       this.loading4 = false
-       this.$store.dispatch('showSnackbar', {
-         type: 'error',
-         message: error.message
-       })
-     })
-   }
+    //  this.$store.dispatch('LoginByUsername', this.data).then(() => {
+    //    const auth = this.$store.getters.user.role_id
+    //    this.loading4 = false
+    //    if (auth === 'A') {
+    //      this.$router.push('/')
+    //    } else {
+    //      this.$router.push('/zenwel-biz/package')
+    //    }
+    //  }).catch(error => {
+    //    this.loading4 = false
+    //    this.$store.dispatch('showSnackbar', {
+    //      type: 'error',
+    //      message: error.message
+    //    })
+    //  })
+    return this.$auth.signInWithCredentials({
+        username: this.data.username,
+        password: this.data.password,
+      }).then((transaction) => {
+        console.log(transaction);
+        if (transaction.status === 'SUCCESS') {
+          this.loading4 = false
+          return this.$auth.token.getWithoutPrompt({
+            clientId: oktaConfig.clientId,
+            responseType: ['token', 'id_token'],
+            scopes: ['openid', 'email'],
+            sessionToken: transaction.sessionToken,
+            redirectUri: oktaConfig.redirectUri,
+          }).then((response) => {
+            // save last email to localStorage
+            // if (this.data.username) {
+            //   localStorage.setItem('ramus_smart_x_login_email', this.data.username);
+            // } else {
+            //   localStorage.removeItem('ramus_smart_x_login_email');
+            // }
+            this.doneLogin(response.tokens.accessToken.value);
+          });
+        }
+      }).catch((err) => {
+        this.loading4 = false
+        console.info('error login', err);
+        console.info('error login', err.response);
+        console.info('error login', JSON.stringify(err));
+        this.isSubmit = false;
+        this.errors = {
+          email: 'Invalid Username or Password',
+          password: 'Invalid Username or Password',
+        };
+        this.$emit('onFailure', err.message);
+      });
+   },
+
+  async doneLogin(token) {
+    try {
+      await this.$store.dispatch('auth/signIn', token);
+      this.isLoading = false;
+      this.$emit('onSuccess');
+    } catch (err) {
+      console.log(err);
+      this.isLoading = false;
+      this.$emit('onFailure', err);
+    }
+  },
  }
 }
 </script>
