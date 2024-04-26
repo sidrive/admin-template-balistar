@@ -148,13 +148,14 @@ export default {
             sessionToken: transaction.sessionToken,
             redirectUri: oktaConfig.redirectUri,
           }).then((response) => {
+            console.log('resp', response)
             // save last email to localStorage
             // if (this.data.username) {
             //   localStorage.setItem('ramus_smart_x_login_email', this.data.username);
             // } else {
             //   localStorage.removeItem('ramus_smart_x_login_email');
             // }
-            this.doneLogin(response.tokens.accessToken.value);
+            this.doneLogin(response.tokens.accessToken.accessToken);
           });
         }
       }).catch((err) => {

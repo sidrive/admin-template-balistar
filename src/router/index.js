@@ -15,6 +15,19 @@ const routes = [
     name: 'Login',
     component: Login
   },
+  {
+    path: '/',
+    name: 'home',
+    component: () => import('@/views/Layout.vue'),
+    redirect: '/dashboard',
+    children: [
+      {
+        name: 'Dashboard',
+        path: 'dashboard',
+        component: () => import('@/views/dashboard/Index.vue')
+      },
+    ]
+  },
 ]
 
 const router = createRouter({
