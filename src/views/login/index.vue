@@ -72,6 +72,7 @@
 
 <script>
 import oktaConfig from '../../config/okta.js';
+// import { login } from '@/api/auth'
 
 export default {
  name: 'LoginForm',
@@ -173,15 +174,19 @@ export default {
    },
 
   async doneLogin(token) {
-    try {
-      await this.$store.dispatch('auth/signIn', token);
-      this.isLoading = false;
-      this.$emit('onSuccess');
-    } catch (err) {
-      console.log(err);
-      this.isLoading = false;
-      this.$emit('onFailure', err);
-    }
+  //   login(token).then((response) => {
+  //   //  this.dataCompany = response.data.data
+  //   console.log('login', response)
+  //  })
+    // try {
+    //   await this.$store.dispatch('auth/signIn', token);
+    //   this.isLoading = false;
+    //   this.$emit('onSuccess');
+    // } catch (err) {
+    //   console.log(err);
+    //   this.isLoading = false;
+    //   this.$emit('onFailure', err);
+    // }
   },
  }
 }

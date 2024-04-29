@@ -5,10 +5,11 @@ import { getToken } from '@/utils/auth'
 // import router from '@/router'
 
 // create an axios instance
+// axios.defaults.withCredentials = true
 const service = axios.create({
   // baseURL: process.env.VUE_APP_BASE_API, // api
-  baseURL: process.env.VUE_APP_BASE_API_URL, // api
-  // baseURL: 'https://adzenwelmin-api.zenwel.com/api/admin/v1/',
+  // baseURL: process.env.VUE_APP_BASE_API_URL, // api
+  baseURL: 'http://127.0.0.1',
   timeout: 30000 // request timeout
 })
 
@@ -53,12 +54,15 @@ function generateErrorMessage (error) {
 
 // request interceptor
 service.interceptors.request.use(
+  console.log('axios'),
   config => {
-    const token = getToken()
+    // const token = getToken()
+    const token = 'Aizadedelll'
     if (token) {
-      if (store.getters.token) {
-        config.headers['Authorization'] = 'Bearer ' + token.access_token
-      }
+      // if (store.getters.token) {
+        // config.headers['Authorization'] = 'Bearer ' + token.access_token
+      // }
+      config.headers['Authorization'] = 'Bearer ' + token
     }
     return config
   },
