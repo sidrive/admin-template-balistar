@@ -1,8 +1,8 @@
 <template>
  <div>
-  <!-- <v-btn text @click="getLogin">
-    Login
-  </v-btn> -->
+  <div class="text-center mt-24" style="width: 100%">
+    <GoogleLogin :callback="callbackGoogle"/>
+  </div>
   <v-btn text @click="getListCompany">
     Company
   </v-btn>
@@ -36,13 +36,13 @@ export default {
 
  mounted () {
   console.log('mounted')
-  this.getLogin()
+  // this.getLogin()
  },
 
  methods: {
   getLogin () {
     this.loading = true
-    AuthSvc.login().then((response) => {
+    AuthSvc.loginTest().then((response) => {
     //  this.dataCompany = response.data.data
     this.loading = false
    })
@@ -55,6 +55,18 @@ export default {
      this.dataCompany = response.data.data
      this.loading = false
    })
+  },
+
+  async doneLogin(token) {
+    console.log('token', token)
+    AuthSvc.login(token).then((response) => {
+    //  this.dataCompany = response.data.data
+    this.loading = false
+   })
+  },
+
+  callbackGoogle (response) {
+    this.doneLogin(response.credential)
   }
  }
  

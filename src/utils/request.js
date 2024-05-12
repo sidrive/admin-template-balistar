@@ -9,7 +9,8 @@ import { getToken } from '@/utils/auth'
 const service = axios.create({
   // baseURL: process.env.VUE_APP_BASE_API, // api
   // baseURL: process.env.VUE_APP_BASE_API_URL, // api
-  baseURL: 'http://127.0.0.1',
+  baseURL: 'https://pulung.yangpunya.com',
+  withCredentials: true,
   timeout: 30000 // request timeout
 })
 

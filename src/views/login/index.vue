@@ -52,7 +52,7 @@
                    block
                    color="#00D79E"
                    style="color: #FFFFFF"
-                   @click="getLogin">
+                   @click="doneLogin('edaeyade99352asaaf')">
                    Login
                    <template v-slot:loader>
                      <span class="custom-loader">
@@ -60,6 +60,9 @@
                      </span>
                    </template>
                  </v-btn>
+               </div>
+               <div class="text-center mt-24" style="width: 100%">
+                <GoogleLogin :callback="callbackGoogle"/>
                </div>
              </v-form>
            </v-card-text>
@@ -73,6 +76,7 @@
 <script>
 import oktaConfig from '../../config/okta.js';
 // import { login } from '@/api/auth'
+import AuthSvc from '@/services/AuthSvc'
 
 export default {
  name: 'LoginForm',
@@ -174,6 +178,11 @@ export default {
    },
 
   async doneLogin(token) {
+    console.log('token', token)
+    AuthSvc.login(token).then((response) => {
+    //  this.dataCompany = response.data.data
+    this.loading = false
+   })
   //   login(token).then((response) => {
   //   //  this.dataCompany = response.data.data
   //   console.log('login', response)
@@ -188,6 +197,11 @@ export default {
     //   this.$emit('onFailure', err);
     // }
   },
+
+  callbackGoogle (response) {
+    console.log('resp', response)
+    this.doneLogin(response.credential)
+  }
  }
 }
 </script>
