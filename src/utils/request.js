@@ -22,7 +22,8 @@ function generateErrorMessage (error) {
 
   if (error.response) {
     if (error.response.data.type !== 'application/json') {
-      const errorError = error.response.data.error.error
+      console.log('e', error.response.data.status.error)
+      const errorError = error.response.data.status.error
       let errArr = errorError
       string = errArr
 
@@ -35,9 +36,9 @@ function generateErrorMessage (error) {
       }
 
       if (error.response) {
-        statusCode = error.response.data.error.status_code
-        message = error.response.data.error.message
-        errorCode = error.response.data.error.error_code
+        statusCode = error.response.status
+        message = error.response.data.status.message
+        errorCode = error.response.data.status.errorCode
       } else {
         string = message
       }

@@ -180,22 +180,9 @@ export default {
   async doneLogin(token) {
     console.log('token', token)
     AuthSvc.login(token).then((response) => {
-    //  this.dataCompany = response.data.data
     this.loading = false
+    this.$router.push('/dashboard')
    })
-  //   login(token).then((response) => {
-  //   //  this.dataCompany = response.data.data
-  //   console.log('login', response)
-  //  })
-    // try {
-    //   await this.$store.dispatch('auth/signIn', token);
-    //   this.isLoading = false;
-    //   this.$emit('onSuccess');
-    // } catch (err) {
-    //   console.log(err);
-    //   this.isLoading = false;
-    //   this.$emit('onFailure', err);
-    // }
   },
 
   callbackGoogle (response) {

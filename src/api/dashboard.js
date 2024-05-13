@@ -5,8 +5,44 @@ export function listCompany (param) {
   return request({
     url: '/master/company',
     method: 'get',
-    headers: {
-      'Cookie': 'AizawaraEEj'
-    }
+  })
+}
+
+export function addCompany (data) {
+  return request({
+    url: '/master/company/',
+    method: 'post',
+    data
+  })
+}
+
+export function editCompany (data) {
+  return request({
+    url: '/master/company/' + data.compId,
+    method: 'put',
+    data
+  })
+}
+
+export function listCompanyGrup (param) {
+  return request({
+    url: '/master/company_group',
+    method: 'get',
+  })
+}
+
+export function editCompanyGrup (data) {
+  return request({
+    url: '/master/company_group/' + data.grcpId,
+    method: 'put',
+    data
+  })
+}
+
+export function addCompanyGrup (data) {
+  return request({
+    url: '/master/company_group/',
+    method: 'post',
+    data
   })
 }
