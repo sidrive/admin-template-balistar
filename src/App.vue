@@ -1,5 +1,6 @@
 <template>
   <v-app>
+    <notify />
     <v-main id="main-content">
       <v-sheet
         id="scrolling-techniques-7">
@@ -11,6 +12,17 @@
   </v-app>
 </template>
 
-<script setup>
-  //
+<script>
+  import Notify from '@/components/Notify'
+  export default {
+    name: 'App',
+
+    components: {
+      Notify
+    },
+
+    data: () => ({
+      //
+    })
+  }
 </script>

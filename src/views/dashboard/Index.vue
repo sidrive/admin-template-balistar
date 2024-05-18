@@ -225,7 +225,12 @@ export default {
      this.dataCompany = response.data.data
      this.loading = false
    }).catch((error) => {
-    console.log('err', error)
+    console.log('err', error.response.data.status.errorCode)
+    this.$store.dispatch('showSnackbar', {
+      type: 'error',
+      message: error.response.data.status.message,
+      code: error.response.data.status.errorCode
+    })
     this.loading = false
    })
   },
