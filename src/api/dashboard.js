@@ -24,6 +24,14 @@ export function editCompany (data) {
   })
 }
 
+export function deleteCompany (data) {
+  return request({
+    url: '/master/company/' + data.compId,
+    method: 'delete',
+    data
+  })
+}
+
 export function listCompanyGrup (param) {
   return request({
     url: '/master/company_group',
@@ -43,6 +51,14 @@ export function addCompanyGrup (data) {
   return request({
     url: '/master/company_group/',
     method: 'post',
+    data
+  })
+}
+
+export function deleteCompanyGrup (data) {
+  return request({
+    url: '/master/company_group/' + data.grcpId,
+    method: 'delete',
     data
   })
 }

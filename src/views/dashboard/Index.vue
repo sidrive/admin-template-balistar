@@ -93,7 +93,9 @@
       </v-card-text>
 
       <v-divider></v-divider>
-
+      <div class="p-24">
+        <v-btn class="full-width"  color="red-accent-4" @click="handleDelete" :loading="loading">Delete</v-btn>
+      </div>
       <v-card-actions>
         <v-spacer></v-spacer>
 
@@ -173,7 +175,7 @@
 </template>
 
 <script>
-import { editCompany, listCompanyGrup, editCompanyGrup, addCompanyGrup, addCompany } from '@/api/dashboard'
+import { editCompany, listCompanyGrup, editCompanyGrup, addCompanyGrup, addCompany, deleteCompany, deleteCompanyGrup } from '@/api/dashboard'
 import AuthSvc from '@/services/AuthSvc'
 export default {
  data () {
@@ -405,6 +407,30 @@ export default {
       compPhone: ''
     }
     this.addDialog = true
+  },
+
+  handleDelete () {
+    if (this.isCompany) {
+      deleteCompany(this.tempItem).then((response) => {
+        this.loading = false
+        this.tempItem = {}
+        this.editDialog = false
+        this.isCompany = 0
+        this.getListCompany()
+      }).catch((error) => {
+        this.loading = false
+      })
+    } else {
+      deleteCompanyGrup(this.tempItemGrup).then((response) => {
+        this.loading = false
+        this.tempItemGrup = {}
+        this.editDialog = false
+        this.isCompany = 0
+        this.getListCompanyGrup()
+      }).catch((error) => {
+        this.loading = false
+      })
+    }
   }
 
  }
